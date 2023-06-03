@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+      "target": "ES6",
+      "jsx": "react",
+      "module": "commonjs",
+      "allowSyntheticDefaultImports": true
+  },
+  "include" : ["src/**/*", "public/reports/stimulsoft"],
+  "exclude": [
+      "dist",
+      "node_modules",
+       "build" 
+  ]
+} 
