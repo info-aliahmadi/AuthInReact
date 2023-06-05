@@ -1,16 +1,11 @@
 import React, { useContext } from "react";
 import logo from "logo.svg";
 import { AuthenticationContext } from "services/Auth/Authentication/AuthenticationProvider";
-import axios from "axios";
-const apiRoot = "https://localhost:7134";
 function Login() {
- debugger
-  var loginStatus = useContext(AuthenticationContext).login("admin", "admin", true);
+  var loginStatus = useContext(AuthenticationContext);
 
   function submit() {
-    axios.get(apiRoot + "/Auth/GetPermissionList").then(function () {
-      debugger;
-    });
+    loginStatus.login("admin", "admin", true);
   }
 
   return (

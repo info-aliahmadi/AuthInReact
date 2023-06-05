@@ -6,9 +6,9 @@ let PrivateRoutes = [
   {
     path: "/admin",
     exact: true,
-    name: "His Person Detail Page",
+    name: "dashboard  page",
     element: <AdminPage />,
-    permission: "ADMIN",
+    permission: "AUTH_GET.PERMISSION.LIST",
   },
 ];
 

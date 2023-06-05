@@ -24,7 +24,7 @@ export default function App() {
   return (
     <>
       <AuthenticationProvider>
-        {/* <AuthorizationProvider> */}
+        <AuthorizationProvider>
           <BrowserRouter>
             {/* <PermissionProvider fetchPermission={fetchPermission(currentUser)}> */}
             {/* {AllRoutes} */}
@@ -35,7 +35,7 @@ export default function App() {
             </Routes>
             {/* </PermissionProvider> */}
           </BrowserRouter>
-        {/* </AuthorizationProvider> */}
+        </AuthorizationProvider>
       </AuthenticationProvider>
     </>
   );

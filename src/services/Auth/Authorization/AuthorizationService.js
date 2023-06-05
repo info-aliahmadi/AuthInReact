@@ -1,6 +1,8 @@
 import axios from "axios";
 import LocalStorageService from "utils/LocalStorageService";
 import { APP_CONFIG } from "utils/appConfig";
+import { setAuthenticationHeader } from "utils/axiosHeaders";
+import AuthenticationService from "../Authentication/AuthenticationService";
 
 export default class AuthorizationService {
   storageService;
@@ -8,31 +10,37 @@ export default class AuthorizationService {
     this.storageService = new LocalStorageService(
       APP_CONFIG.AUTHORIZATION_STORAGE_NAME
     );
+    setAuthenticationHeader(new AuthenticationService().getJwt());
   }
 
-  isAuthorized = async (permissionName) => {
-    debugger
-    var permissions = this.storageService.getUserPermissions();
-
-    return permissions.find(x=> x.name === permissionName) == null? false: true;
-
+  isAuthorized = async (permission) => {
+    return new Promise((resolve, reject) => {
+      this.getUserPermissions().then((permissions) => {
+        let result = permissions?.findIndex(function (element) {
+          return element.name === permission;
+        });
+        resolve(result >= 0 ? true : false);
+      });
+    });
   };
 
   getUserPermissions = async () => {
+    return new Promise((resolve, reject) => {
     var permissions = this.storageService.getItem();
     if (permissions == null) {
       axios
         .get(APP_CONFIG.API_BASEPATH + "/Auth/GetPermissionsOfCurrentUser")
         .then((response) => {
           this.storageService.AddItem(response.data);
-          return JSON.parse(response.data);
+          resolve(JSON.parse(response.data));
         })
         .catch((error) => {
-          return error.message;
+          reject(error.message);
         });
     } else {
-      return permissions;
+      resolve(permissions);
     }
+  })
   };
 
   refreshUserPermissions = async () => {

@@ -1,21 +1,25 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import AuthorizationService from "./AuthorizationService";
 
 export const AuthorizationContext = React.createContext({
-    isAuthorized: () => ({}),
-    getUserPermissions: () => ({}),
-    refreshUserPermissions: () => ({})
+  isAuthorized: () => ({}),
+  getUserPermissions: () => ({}),
+  refreshUserPermissions: () => ({}),
 });
 
 export const AuthorizationConsumer = AuthorizationContext.Consumer;
 
 export class AuthorizationProvider extends Component {
-    AuthorizationService;
-    constructor(props) {
-        super(props);
-        this.AuthorizationService = new AuthorizationService("cache");
-    }
-    render() {
-        return <AuthorizationContext.Provider value={this.AuthorizationService}>{this.props.children}</AuthorizationContext.Provider>;
-    }
+  authorizationService;
+  constructor(props) {
+    super(props);
+    this.authorizationService = new AuthorizationService();
+  }
+  render() {
+    return (
+      <AuthorizationContext.Provider value={this.authorizationService}>
+        {this.props.children}
+      </AuthorizationContext.Provider>
+    );
+  }
 }

@@ -4,31 +4,38 @@ import { Route } from "react-router-dom";
 // import PrivateRoute from "utils/privateRoute";
 import PrivateRoutes from "routes/privateRoutes";
 import PublicRoutes from "routes/publicRoutes";
-import PrivateRoute from "utils/PrivateRoute";
-
+import Authenticate from "services/Auth/Authentication/Authenticate";
+// import PrivateRoute from "utils/PrivateRoute";
 
 const privateRoute = PrivateRoutes.map((route, index) => {
-  return route.element ? (
-    <PrivateRoute
-      key={index}
-      path={route.path}
-      exact={route.exact}
-      name={route.name}
-      element={route.element}
-      permission={route.permission}
-    />
-  ) : null;
+  return (
+    route.element && (
+      <Route
+        key={index}
+        path={route.path}
+        exact={route.exact}
+        name={route.name}
+        element={
+          <Authenticate permission={route.permission}>
+            {route.element}
+          </Authenticate>
+        }
+      />
+    )
+  );
 });
 const publicRoute = PublicRoutes.map((route, index) => {
-  return route.element ? (
-    <Route
-      key={index}
-      path={route.path}
-      exact={route.exact}
-      name={route.name}
-      element={route.element}
-    />
-  ) : null;
+  return (
+    route.element && (
+      <Route
+        key={index}
+        path={route.path}
+        exact={route.exact}
+        name={route.name}
+        element={route.element}
+      />
+    )
+  );
 });
 
 export const AllRoutes = (

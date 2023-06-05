@@ -1,10 +1,10 @@
-
 export default class LocalStorageService {
+  
   localStorageName;
   constructor(localStorageName) {
     this.localStorageName = localStorageName;
   }
-  AddItem(value) {
+  AddItem(value, expireDate) {
     localStorage.setItem(this.localStorageName, JSON.stringify(value));
   }
   getItem() {
