@@ -1,11 +1,36 @@
-# Getting Started with Create React App
+# Authentication and Authorization in React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple authentication and authorization system built using ReactJS and Context API. It allows users to sign up, log in, and access restricted routes based on their roles.
 
-## Available Scripts
+## Features
+- User login: Registered users can log in using their username and password.
 
-In the project directory, you can run:
+- Authorization: Access to certain routes is restricted based on user permission.
 
+- Protected routes: Some routes require authentication. Users must be logged in to access these routes.
+
+- Logout: Users can log out of their account, which will clear their session and revoke their access token.
+
+## Technologies Used
+- ReactJS: A JavaScript library for building user interfaces.
+- Context API: A state management system provided by React for sharing data across components.
+- React Router: A routing library for React that enables navigation and routing within the application.
+- Axios: A promise-based HTTP client for making API requests.
+- JSON Web Tokens (JWT): Tokens are used for authentication and authorization.
+- Cookie and LocalStorage : you can choose the storage for store the jwt bearer and user permissions.
+
+
+## Getting Started
+1. Clone the repository:
+### `git clone https://github.com/info-aliahmadi/AuthInReact.git`
+
+2. Install the dependencies:
+### `npm install`
+
+3. Configure the API endpoint:
+In the src/utils/appConfig.js file, update the API_PATH constant with the appropriate URL for your backend API.
+
+4. Run the development server:
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -13,11 +38,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
