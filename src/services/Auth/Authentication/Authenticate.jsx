@@ -4,22 +4,26 @@ import { AuthenticationContext } from "services/Auth/Authentication/Authenticati
 import Authorize from "../Authorization/Authorize";
 
 function Authenticate(props) {
-  var authenticationContext = useContext(AuthenticationContext);
-  var [isAuthenticated, setAuthenticated] = useState();
+  var [isAuthenticatedResult, setIsAuthenticatedResult] = useState();
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   useEffect(() => {
     const authenticationCheck = () => {
-      authenticationContext.isAuthenticated().then((authenticate) => {
-        setAuthenticated(authenticate);
+      isAuthenticated().then((authenticate) => {
+        setIsAuthenticatedResult(authenticate);
       });
     };
     authenticationCheck();
-  }, []);
+  }, [isAuthenticated]);
 
-  if (isAuthenticated === true) {
-    return <Authorize {...props}>{props.children}</Authorize>;
-  } else if (isAuthenticated === false) {
-    return <Navigate to="/login" />;
+  if (isAuthenticatedResult === true) {
+    return props.justAuthenticate === true ? (
+      <>{props.children}</>
+    ) : (
+      <Authorize {...props}>{props.children}</Authorize>
+    );
+  } else if (isAuthenticatedResult === false) {
+    return <Navigate to="/login" replace />;
   } else {
     return (
       <>
