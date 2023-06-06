@@ -1,23 +1,31 @@
 import AccessDenied from "pages/AccessDenied";
-import React, { useContext, useState } from "react";
-import { AuthorizationContext } from "services/Auth/Authorization/AuthorizationProvider";
-
+import React, { useContext, useEffect, useState } from "react";
+import { AuthorizationContext } from "./AuthorizationProvider";
 function Authorize(props) {
+  var authorizationContext = new useContext(AuthorizationContext);
   var [isAuthorized, setIsAuthorized] = useState();
-  var authorizationContext = useContext(AuthorizationContext);
 
-  if (props.permission) {
-    authorizationContext.isAuthorized(props.permission).then((isAuthorized) => {
-      setIsAuthorized(isAuthorized);
-    });
-  } else {
-    setIsAuthorized(false);
-  }
+  useEffect(() => {
+    const authorizitionCheck = async () => {
+      if (props.permission) {
+        authorizationContext
+          .isAuthorized(props.permission)
+          .then((isAuthorized) => {
+            setIsAuthorized(isAuthorized);
+          });
+      }
+    };
+    authorizitionCheck();
+  }, [props.permission]);
 
-  if (isAuthorized) {
+  if (isAuthorized === true) {
     return <>{props.children}</>;
-  } else if (!isAuthorized) {
-    return <AccessDenied />;
+  } else if (isAuthorized === false) {
+    return props.accessDeniedElement ? (
+      props.AccessDeniedElement
+    ) : (
+      <AccessDenied />
+    );
   } else {
     return (
       <>
